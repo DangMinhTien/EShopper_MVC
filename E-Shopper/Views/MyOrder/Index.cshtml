@@ -1,0 +1,70 @@
+﻿@model List<OrderModel>
+<table class="table table-bordered">
+    <tr>
+        <th>Mã Code</th>
+        <th>Người đặt</th>
+        <th>Địa chỉ giao hàng</th>
+        <th>Ngày đặt</th>
+        <th>Trạng thái</th>
+        <th>Tổng số lượng</th>
+        <th>Tổng tiền</th>
+        <th>SDT người nhận</th>
+        <th></th>
+    </tr>
+        @foreach(var item in Model)
+        {
+            <tr>
+                <td>@item.OrderCode</td>
+                <td>@item.Name</td>
+                <td>@item.Address</td>
+                <td>@item.CreatedDate.ToShortDateString()</td>
+                <td>
+                    @if(item.Status == 0)
+                    {
+                        <span class="text-danger">Chưa giao</span>
+                    }
+                    else
+                    {
+                        <span class="text-success">Đã giao</span>
+                    }
+                </td>
+                <td>@item.Quantity</td>
+                <td>@item.TotalPrice</td>
+                <td>@item.PhoneNumber</td>
+                <td>
+                    <a asp-action="Detail" asp-controller="MyOrder" asp-route-orderid="@item.Id">Xem chi tiết</a>
+                @if (item.Status == 0)
+                {
+                    <span>|</span>
+                    <a href="" data-toggle="modal" data-target="#@item.OrderCode">
+                        Xóa
+                    </a>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="@item.OrderCode" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Xóa đơn hàng</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <h3>Bạn có muốn xóa đơn hàng @item.OrderCode</h3>
+                                </div>
+                                <div class="modal-footer">
+                                    <form asp-action="Delete" asp-controller="MyOrder" method="post">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                                        <input type="hidden" name="orderid" value="@item.Id" />
+                                        <button type="submit" class="btn btn-primary" style="margin-top: 0;">Xóa</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+                </td>
+            </tr>
+        }
+</table>

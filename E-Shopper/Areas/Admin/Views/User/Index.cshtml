@@ -1,0 +1,41 @@
+﻿@model List<AppUserModel>
+@inject UserManager<AppUserModel> _usermanager
+<h2>Danh sách quyền</h2>
+<table class="table table-bordered">
+    <tr>
+        <th>Mã người dùng</th>
+        <th>Tên người dùng</th>
+        <th>Địa chỉ</th>
+        <th>Email</th>
+        <th>Vai trò</th>
+        <th>Quản lý</th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.Id</td>
+            <td>@item.UserName</td>
+            <td>@item.Address</td>
+            <td>@item.Email</td>
+            <td>
+                @{
+                    List<string>
+                    roleName = (await _usermanager.GetRolesAsync(item)).ToList();
+                    if(roleName.Count == 0)
+                    {
+                        <a class="" asp-action="AddRole" asp-route-userid="@item.Id">+ Thêm vai trò</a>
+                    }
+                    else
+                    {
+                        var role = string.Join(", ", roleName);
+                        <a class="" asp-action="AddRole" asp-route-userid="@item.Id">@role</a>
+                    }
+
+                }
+            </td>
+            <td>
+                <a asp-action="ChangePassword" asp-controller="User" asp-area="Admin" asp-route-userid="@item.Id">Đặt mật khẩu</a>
+            </td>
+        </tr>
+    }
+</table>

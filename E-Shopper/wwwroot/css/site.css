@@ -1,0 +1,42 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+.category.active {
+    color: #fe980f !important;
+    font-weight: bold;
+}
+.brand.active {
+    color: #fe980f !important;
+    font-weight: bold;
+}
+.notification-box {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    z-index: 2;
+}
+.notification+.notification{
+    top: 10px;
+    margin-top: 10px;
+}
+.notification>a{
+    margin-left: 25px;
+}
+footer{
+    margin-top: 20px;
+}

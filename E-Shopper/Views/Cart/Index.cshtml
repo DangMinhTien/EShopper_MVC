@@ -1,0 +1,77 @@
+﻿@model E_Shopper.Models.ViewModel.CartItemViewModel
+@{
+	CultureInfo cultureInfo = new CultureInfo("vi-VN");
+}
+<section id="cart_items" class="col-12">
+	<div class="container">
+		<div class="breadcrumbs">
+			<ol class="breadcrumb">
+				<li><a href="#">Home</a></li>
+				<li class="active">Shopping Cart</li>
+			</ol>
+		</div>
+		<div class="table-responsive cart_info">
+			<table class="table table-condensed">
+				<thead>
+					<tr class="cart_menu">
+						<td class="image">Ảnh</td>
+						<td class="description"></td>
+						<td class="price">Giá</td>
+						<td class="quantity">Số Lượng</td>
+						<td class="total">Tổng</td>
+						<td></td>
+					</tr>
+				</thead>
+				<tbody>
+					@if(Model.CartItem.Count > 0)
+					{
+						foreach(var item in Model.CartItem)
+						{
+							<tr>
+								<td class="cart_product" style="margin: 0px">
+									<a asp-action="Detail" asp-controller="Product" asp-route-id="@item.ProductId" style="display: block;"><img style="width: 100px; height: 150px;object-fit: contain;" src="~/images/product-details/@item.image" alt="@item.ProductName"/></a>
+								</td>
+								<td class="cart_description">
+									<h4><a asp-action="Detail" asp-controller="Product" asp-route-id="@item.ProductId">@item.ProductName</a></h4>
+									@* <p>Web ID: 1089772</p> *@
+								</td>
+								<td class="cart_price">
+									<p>@string.Format(cultureInfo, "{0:C}", item.Price)</p>
+								</td>
+								<td class="cart_quantity">
+									<div class="cart_quantity_button">
+										<a class="cart_quantity_up" asp-action="Increase" asp-controller="Cart" asp-route-id="@item.ProductId"> + </a>
+										<input class="cart_quantity_input" type="text" name="quantity" value="@item.Quantity" autocomplete="off" size="2">
+										<a class="cart_quantity_down" asp-action="Decrease" asp-controller="Cart" asp-route-id="@item.ProductId"> - </a>
+									</div>
+								</td>
+								<td class="cart_total">
+									<p class="cart_total_price">@string.Format(cultureInfo, "{0:C}", item.Price * item.Quantity)</p>
+								</td>
+								<td class="cart_delete">
+									<a class="cart_quantity_delete" asp-action="Remove" asp-controller="Cart" asp-route-id="@item.ProductId"><i class="fa fa-times"></i></a>
+								</td>
+							</tr>
+
+						}
+						<tr>
+							<td colspan="6">Tổng tiền: @string.Format(cultureInfo, "{0:C}", Model.GrandTotal)</td>
+						</tr>
+					}
+					else
+					{
+						<tr>
+							<td colspan="6">
+								<h4 class="text-center">Giỏ hàng trống</h4>
+							</td>
+						</tr>
+					}
+				</tbody>
+			</table>
+		</div>
+		@if (Model.CartItem.Count() > 0)
+		{
+			<a asp-action="Index" asp-controller="Checkout" class="btn btn-primary" style="float: right;">Đặt hàng</a>
+		}
+	</div>
+</section> <!--/#cart_items-->

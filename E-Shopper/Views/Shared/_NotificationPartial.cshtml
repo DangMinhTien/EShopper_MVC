@@ -1,0 +1,19 @@
+﻿@model string
+@if (TempData["success"] != null || TempData["error"] != null)
+{
+    <div class="notification-box">
+        @if(TempData["success"] != null){
+            <div class="alert alert-success alert-dismissible notification">
+                <a href="#" class="close mx-2" data-dismiss="alert" aria-label="close">&times;</a>
+                <a href="@Model" class="text-success">@TempData["success"]</a>
+            </div>
+        }
+        @if(TempData["error"] != null)
+        {
+            <div class="alert alert-danger alert-dismissible notification">
+                <a href="#" class="close mx-2" data-dismiss="alert" aria-label="close">&times;</a>
+                <a href="@Model" class="text-success">@TempData["error"]</a>
+            </div>
+        }
+    </div>
+}

@@ -1,0 +1,47 @@
+﻿@model List<IdentityRole>
+<h2>Danh sách quyền</h2>
+<a asp-action="Create" asp-controller="Role" asp-area="Admin" class="btn btn-primary" style="margin-bottom: 10px;">Thêm mới</a>
+<table class="table table-bordered">
+    <tr>
+        <th>Mã quyền</th>
+        <th>Tên quyền</th>
+        <th>Quản lý</th>
+    </tr>
+    @foreach(var item in Model)
+    {
+        <tr>
+            <td>@item.Id</td>
+            <td>@item.Name</td>
+            <td>
+                <a asp-action="Edit" asp-controller="Role" asp-area="Admin" asp-route-roleid="@item.Id">Sửa</a> |
+                <a href="" data-toggle="modal" data-target="#@item.Id">
+                    Xóa
+                </a>
+
+                <!-- Modal -->
+                <div class="modal fade" id="@item.Id" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Xóa quyền</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <h3 class="text-center">bạn có muốn xóa quyền có tên @item.Name</h3>
+                            </div>
+                            <div class="modal-footer">
+                                <form asp-action="Delete" asp-controller="Role" asp-area="Admin" method="post">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                                    <input type="hidden" name="roleid" value="@item.Id" />
+                                    <button type="submit" class="btn btn-primary" style="margin-top: 0;">Xóa</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    }
+</table>

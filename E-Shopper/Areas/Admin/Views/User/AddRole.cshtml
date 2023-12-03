@@ -1,0 +1,29 @@
+﻿@model AppUserModel
+
+<h4>Đặt vai trò cho người dùng: @Model.UserName</h4>
+
+    <div class="col-md-4">
+        <form id="set-password-form" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" name="userid" value="@Model.Id"/>
+            <div class="form-group">
+                <label class="control-label">Chọn vai trò</label>
+                <select id="selectRole" name="selectRole" multiple="multiple" class="w-100" asp-items="@ViewBag.Role"></select>
+            </div>
+            <button type="submit" class="btn btn-primary">Cập nhật</button>
+        </form>
+        <a asp-action="Index" asp-controller="User" asp-area="Admin">Danh sách các thành viên</a>
+    </div>
+
+@section Scripts {
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/multiple-select@1.5.2/dist/multiple-select.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/multiple-select@1.5.2/dist/multiple-select.min.js"></script>
+    <script>
+        $("#selectRole").multipleSelect({
+            selectAll: false,
+            keepOpen: false,
+            isOpen: false
+        });
+    </script>
+    <partial name="_ValidationScriptsPartial" />
+}
